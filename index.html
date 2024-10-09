@@ -55,7 +55,7 @@ CSS: Adds basic styling for input, buttons, suggestions, and result display. -->
 
         <!-- Title and Description -->
         <p>Enter a postcode to see the administrative and statistical areas it sits within</p>
-    <div class="container2">
+    <div class="container2 div-grey-box" >
 
         
         
@@ -437,16 +437,21 @@ CSS: Adds basic styling for input, buttons, suggestions, and result display. -->
         }
 
         th, td {
-            padding: 10px;
+            padding: 3px;
             text-align: left;
             border: 1px solid #ddd;
             width: 33%; /* Expand columns equally */
         }
 
         th {
-            background-color: #f2f2f2;
             font-weight: normal; /* Remove bold from headers */
         }
 
-
+        .div-grey-box {
+	line-height: 1.78;
+	overflow: hidden;
+	box-shadow: 2px 2px 4px #4140424d;
+	background-color: #f5f5f6;
+	padding: 16px 16px;
+}
 </style>
