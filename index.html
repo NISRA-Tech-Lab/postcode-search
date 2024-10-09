@@ -6,168 +6,212 @@
     <title>Where is my area?</title>
 </head>
 
-<body onresize = "responsiveFonts()" >
+<!-- Explanation of Code Components:
+
+HTML Structure: Defines the layout, including the title, input for postcode, suggestions, and result display sections.
+
+JavaScript Functions:
+normalizePostcode: Standardizes postcode input by removing spaces and converting to uppercase.
+loadPostcodes: Loads all postcodes from a CSV file on page load, storing them in an array for quick access.
+filterPostcodes: Filters postcodes based on user input and displays suggestions.
+selectPostcode: Sets a suggested postcode in the input and triggers a search.
+search: Finds and displays information related to the input postcode.
+
+CSS: Adds basic styling for input, buttons, suggestions, and result display. -->
 
 
-    <!-- Google Tag Manager (noscript) -->
-      <noscript><iframe src=https://www.googletagmanager.com/ns.html?id=GTM-KF6WGSG
-      height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-    <!-- End Google Tag Manager (noscript) -->
-
-
-
-
-    <body>
-
-
+<body>
     <div class="container">
+        <!-- Title and Description -->
         <h1>Where is my area?</h1>
         <h2>Enter a postcode and find the administrative and statistical geographies based on the Central Postcode Directory</h2>
-        <input type="text" id="searchInput" placeholder="Enter postcode...">
+        
+        <!-- Input box for postcode search with dynamic filtering on input -->
+        <input type="text" id="searchInput" placeholder="Enter postcode..." oninput="filterPostcodes()">
+        
+        <!-- Suggestions box for displaying matching postcodes as user types -->
+        <div id="suggestions"></div>
+        
+        <!-- Button to perform a search based on the input postcode -->
         <button onclick="search()">Search</button>
+        
+        <!-- Result area for displaying information related to the selected postcode -->
         <div id="resultTable"></div>
     </div>
 
     <script>
+        let postcodeData = []; // Array to store postcodes from the CSV file for filtering
+
+        // Function to normalize postcodes by removing spaces and converting to uppercase for consistency
         function normalizePostcode(postcode) {
-    // Remove all spaces from the postcode and convert to uppercase
-    return postcode.replace(/\s/g, '').toUpperCase();}
+            return postcode.replace(/\s/g, '').toUpperCase();
+        }
 
-function search() {
-    const searchTerm = normalizePostcode(document.getElementById('searchInput').value);
+        // Load postcodes from CSV file on page load, storing in `postcodeData` array
+        function loadPostcodes() {
+            fetch('CPD_LIGHT_JULY_2024.csv')
+                .then(response => response.text())
+                .then(data => {
+                    // Split CSV data into rows, taking only the first column (postcode) from each row
+                    postcodeData = data.split('\n').map(row => row.split(',')[0].trim());
+                })
+                .catch(error => console.error('Error loading postcode data:', error));
+        }
 
-    if (searchTerm === '') {
-        alert('Please enter a postcode.');
-        return;
-    }
+        // Filter postcodes based on user input and display suggestions
+        function filterPostcodes() {
+            const searchTerm = normalizePostcode(document.getElementById('searchInput').value);
 
-    fetch('CPD_LIGHT_JULY_2024.csv')
-        .then(response => response.text())
-        .then(data => {
-            const rows = data.split('\n');
-            let found = false;
+            // Filter `postcodeData` for matches, limited to 10 suggestions
+            const suggestions = postcodeData.filter(postcode => postcode.includes(searchTerm)).slice(0, 10);
 
-            // Prepare list HTML
-            let pHTML = "<p>";
-			let listHTML = "<ul>";
-			let listHTML2 = "<ul>";
-					let base = "MB";
+            // Generate HTML for suggestions and inject into `#suggestions` div
+            const suggestionsHTML = suggestions.map(postcode => `<div onclick="selectPostcode('${postcode}')">${postcode}</div>`).join('');
+            document.getElementById('suggestions').innerHTML = suggestionsHTML || '<div>No matching postcodes found.</div>';
+        }
 
-            rows.forEach(row => {
-                const columns = row.split(',');
-                const postcode = normalizePostcode(columns[0]);
+        // Set selected postcode into the search input and clear suggestions, then start search
+        function selectPostcode(postcode) {
+            document.getElementById('searchInput').value = postcode;
+            document.getElementById('suggestions').innerHTML = ''; // Clear suggestions
+            search(); // Perform search with selected postcode
+        }
 
-                if (postcode === searchTerm) {
-                    // Extract specific columns (lgd and ward)
-                            const lgd2014 = columns[4].trim();
-							const LGD2014NAME = columns[5].trim();
-							const WARD2014 = columns[6].trim();
-							const WARD2014NAME = columns[7].trim();
-							const DEA2014 = columns[8].trim();
-							const DEA2014NAME = columns[9].trim();
-							const AA2008 = columns[10].trim();
-							const AA2008NAME = columns[11].trim();
-							const AA2024NAME = columns[23].trim();
-							const HSCTNAME = columns[17].trim();
-							const DZ2021 = columns[18].trim();
-							const DZ2021_name = columns[19].trim();
-							const SDZ2021 = columns[20].trim();
-							const SDZ2021_name = columns[21].trim();
-							const SETTLEMENT15 = columns[30].trim();
-							const SETTLEMENT15_URBAN_RURAL = columns[31].trim();
-							
-							pHTML += `<strong>Postcode:</strong> ${postcode.slice(0, -3)} ${postcode.substr(-3)}`;
+        // Main search function to find and display data related to the input postcode
+        function search() {
+            const searchTerm = normalizePostcode(document.getElementById('searchInput').value);
 
-							listHTML += `<li><strong>Local Government District:</strong> <a href="${lgd2014}" target="_blank">${LGD2014NAME}</a></li>
-										 <li><strong>District Electoral Area:</strong> <a href="${DEA2014}" target="_blank">${DEA2014NAME}</a></li>
-										 <li><strong>Super Data Zone:</strong> <a href="${SDZ2021}" target="_blank">${SDZ2021_name}</a></li>
-										 <li><strong>Data Zone:</strong> <a href="${DZ2021}" target="_blank">${DZ2021_name}</a></li>`;
-										
-
-							listHTML2 += `<li><strong>Urban / Rural:</strong> ${SETTLEMENT15_URBAN_RURAL}</li>
-										  <li><strong>Settlement:</strong> ${SETTLEMENT15}</li>
-										  <li><strong>Health and Social Care Trust:</strong> ${HSCTNAME}</li>
-										  <li><strong>Assembly Area Name (2008):</strong> ${AA2008NAME}</li>
-										  <li><strong>Assembly Area Name (2024):</strong> ${AA2024NAME}</li>
-										  <li><strong>Ward Name:</strong> ${WARD2014NAME}</li>`;
-
-							found = true;
-                }
-            });
-                    pHTML += "</p>";
-					listHTML += "</ul>";
-					listHTML2 += "</ul>";
-
-            if (!found) {
-                document.getElementById('resultTable').innerHTML = 'Postcode not found.';
-            } else {
-                document.getElementById('resultTable').innerHTML = pHTML +
-							"<p>Geographies in Northern Ireland Local Statistics Explorer</p>" +
-							listHTML +
-							"<p>Geographies not in Northern Ireland Local Statistics Explorer</p>" +
-							listHTML2;
+            // Check if postcode is entered
+            if (searchTerm === '') {
+                alert('Please enter a postcode.');
+                return;
             }
-        })
-        .catch(error => {
-            console.error('Error fetching data:', error);
-            alert('Error fetching data. Please try again.');
-        });
-}
+
+            // Fetch data from CSV file
+            fetch('CPD_LIGHT_JULY_2024.csv')
+                .then(response => response.text())
+                .then(data => {
+                    const rows = data.split('\n');
+                    let found = false; // Flag to track if postcode is found
+
+                    // Initialize HTML for result display
+                    let pHTML = "<p>";
+                    let listHTML = "<ul>";
+                    let listHTML2 = "<ul>";
+
+                    rows.forEach(row => {
+                        const columns = row.split(',');
+                        const postcode = normalizePostcode(columns[0]);
+
+                        // Match the input postcode with CSV data
+                        if (postcode === searchTerm) {
+                            // Extract specific fields related to the matched postcode
+                            const LGD2014NAME = columns[5].trim();
+                            const DEA2014 = columns[8].trim();
+                            const DEA2014NAME = columns[9].trim();
+                            const SDZ2021 = columns[20].trim();
+                            const SDZ2021_name = columns[21].trim();
+                            const DZ2021 = columns[18].trim();
+                            const DZ2021_name = columns[19].trim();
+                            const HSCTNAME = columns[17].trim();
+                            const AA2024NAME = columns[23].trim();
+                            const SETTLEMENT15 = columns[30].trim();
+                            const SETTLEMENT15_URBAN_RURAL = columns[31].trim();
+
+                            // Format the result with matched data
+                            pHTML += `<strong>Postcode:</strong> ${postcode.slice(0, -3)} ${postcode.substr(-3)}`;
+                            listHTML += `<li><strong>Local Government District:</strong> ${LGD2014NAME}</li>
+                                         <li><strong>District Electoral Area:</strong> ${DEA2014NAME}</li>
+                                         <li><strong>Super Data Zone:</strong> ${SDZ2021_name}</li>
+                                         <li><strong>Data Zone:</strong> ${DZ2021_name}</li>`;
+                            listHTML2 += `<li><strong>Urban / Rural:</strong> ${SETTLEMENT15_URBAN_RURAL}</li>
+                                          <li><strong>Settlement:</strong> ${SETTLEMENT15}</li>
+                                          <li><strong>Health and Social Care Trust:</strong> ${HSCTNAME}</li>
+                                          <li><strong>Assembly Area Name (2024):</strong> ${AA2024NAME}</li>`;
+                            found = true;
+                        }
+                    });
+
+                    // Finalize HTML structure for results
+                    pHTML += "</p>";
+                    listHTML += "</ul>";
+                    listHTML2 += "</ul>";
+
+                    // Display either results or 'not found' message
+                    document.getElementById('resultTable').innerHTML = found 
+                        ? pHTML + "<p>Geographies in Northern Ireland Local Statistics Explorer</p>" + listHTML + 
+                          "<p>Geographies not in Northern Ireland Local Statistics Explorer</p>" + listHTML2
+                        : 'Postcode not found.';
+                })
+                .catch(error => {
+                    console.error('Error fetching data:', error);
+                    alert('Error fetching data. Please try again.');
+                });
+        }
+
+        // Load postcode data when the page loads
+        window.onload = loadPostcodes;
     </script>
-
 </body>
-
 
 </html>
 
-
 <style>
     body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
-}
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+    }
 
-.container {
-    max-width: 600px;
-    margin: 0 auto;
-    padding: 20px;
-    background-color: #fff;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
+    .container {
+        max-width: 600px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #fff;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
 
-h1 {
-    text-align: center;
-    color: #333;
-}
+    h1 {
+        text-align: center;
+        color: #333;
+    }
 
-input[type="text"] {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 10px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-}
+    /* Styling for input and suggestions */
+    input[type="text"] {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 10px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+    }
 
-button {
-    padding: 10px 20px;
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-}
+    #suggestions div {
+        padding: 5px;
+        cursor: pointer;
+    }
 
-button:hover {
-    background-color: #0056b3;
-}
+    #suggestions div:hover {
+        background-color: #eee;
+    }
 
-#result {
-    margin-top: 20px;
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-}
+    button {
+        padding: 10px 20px;
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
 
+    button:hover {
+        background-color: #0056b3;
+    }
 
+    /* Result display styling */
+    #result {
+        margin-top: 20px;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+    }
 </style>
