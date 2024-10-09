@@ -46,7 +46,7 @@ CSS: Adds basic styling for input, buttons, suggestions, and result display. -->
                 <div class="col" style="padding-right:0px;"><a href="https://www.nisra.gov.uk/" target="_blank" rel="noopener noreferrer"><img src="images/nisra-only-white.png" height="70"></a></div>
             </div>
             <div style = "display: flex; flex-direction:column; justify-content: right; align-items: center">
-                <h1 style="font-size: 2.5em; font-weight: bold;color: #ffffff; line-height: 1em; margin-bottom: 10px;">What area is my postcode in?</h1>
+                <h1 style="font-size: 2.5em; font-weight: bold;color: #ffffff; line-height: 1em; margin-bottom: 10px;">Find my areas</h1>
             </div>
 
 
@@ -54,7 +54,7 @@ CSS: Adds basic styling for input, buttons, suggestions, and result display. -->
 
 
         <!-- Title and Description -->
-        <p>Enter a postcode and find the administrative and statistical geographies based on the Central Postcode Directory</p>
+        <p>Enter a postcode to see the administrative and statistical areas it sits within</p>
     <div class="container2">
 
         
@@ -75,11 +75,12 @@ CSS: Adds basic styling for input, buttons, suggestions, and result display. -->
 
     </div>
 
-        <p>Notes:</p>
+        <p><strong>Notes:</strong></p>
     <p>This postcode search is based on the <a href="https://www.nisra.gov.uk/support/geography/central-postcode-directory">Central Postcode Directory (CPD)</a>.  
-        <p>The CPD is a list of postcodes in Northern Ireland, with the average location of the addresses in each postcode. It is used to provide a direct lookup between postcodes and a range of administrative and statistical geographies including Local Government Districts, District Electioral Areas, Data Zones, Super Data Zones and Settlements.   </p>
+        <p>The CPD is a list of postcodes in Northern Ireland, with the average location of the addresses in each postcode. 
+            It is used to provide a direct lookup between postcodes and a range of administrative and statistical areas or geographies including Local Government Districts, District Electoral Areas, Data Zones, Super Data Zones and Settlements.   </p>
         <p>The version of the CPD used is July 2024.</p>
-    <p>The boundaries can be explored in more detail using a <a href = "https://apps.spatialni.gov.uk/NISRABoundariesApplication/index.html">NISRA Boundaries Application</a> </p>
+    <p>The location of addresses, postcodes and the boundaries of the areas can be explored in more detail using the <a href = "https://apps.spatialni.gov.uk/NISRABoundariesApplication/index.html">NISRA Boundaries Application</a> </p>
 
 
     <!-- Footer section -->
@@ -192,6 +193,10 @@ CSS: Adds basic styling for input, buttons, suggestions, and result display. -->
                 let listHTML = "<ul>";
                 let listHTML2 = "<ul>";
 
+                let tableHTMLadmin = "<table><tr><th>Geographical Area</th><th>Area Name</th><th>Area Code</th></tr>";
+                let tableHTMLstats = "<table><tr><th>Geographical Area</th><th>Area Name</th><th>Area Code</th></tr>";
+                let tableHTMLother = "<table><tr><th>Geographical Area</th><th>Area Name</th><th>Area Code</th></tr>";
+
                 rows.forEach(row => {
                     const columns = row.split(',');
                     const postcode = normalizePostcode(columns[0]);
@@ -199,28 +204,57 @@ CSS: Adds basic styling for input, buttons, suggestions, and result display. -->
                     // Match the input postcode with CSV data
                     if (postcode === searchTerm) {
                         // Extract specific fields related to the matched postcode
+                        const LGD2014 = columns[4].trim();
                         const LGD2014NAME = columns[5].trim();
+                        const WARD2014 = columns[6].trim();
+                        const WARD2014NAME = columns[7].trim();
                         const DEA2014 = columns[8].trim();
                         const DEA2014NAME = columns[9].trim();
+                        const AA2008 = columns[10].trim();
+                        const AA2008NAME = columns[11].trim();
                         const SDZ2021 = columns[20].trim();
                         const SDZ2021_name = columns[21].trim();
                         const DZ2021 = columns[18].trim();
                         const DZ2021_name = columns[19].trim();
                         const HSCTNAME = columns[17].trim();
+                        const AA2024 = columns[22].trim();
                         const AA2024NAME = columns[23].trim();
+                        const SA2011 = columns[24].trim();
+                        const SOA2001 = columns[25].trim();
+                        const SOA2001NAME = columns[25].trim();
                         const SETTLEMENT15 = columns[30].trim();
                         const SETTLEMENT15_URBAN_RURAL = columns[31].trim();
 
                         // Format the result with matched data
                         pHTML += `<strong>Postcode:</strong> ${postcode.slice(0, -3)} ${postcode.substr(-3)}`;
-                        listHTML += `<li><strong>Local Government District:</strong> ${LGD2014NAME}</li>
-                                     <li><strong>District Electoral Area:</strong> ${DEA2014NAME}</li>
-                                     <li><strong>Super Data Zone:</strong> ${SDZ2021_name}</li>
-                                     <li><strong>Data Zone:</strong> ${DZ2021_name}</li>`;
-                        listHTML2 += `<li><strong>Urban / Rural:</strong> ${SETTLEMENT15_URBAN_RURAL}</li>
-                                      <li><strong>Settlement:</strong> ${SETTLEMENT15}</li>
-                                      <li><strong>Health and Social Care Trust:</strong> ${HSCTNAME}</li>
-                                      <li><strong>Assembly Area Name (2024):</strong> ${AA2024NAME}</li>`;
+                        // listHTML += `<li><strong>Health and Social Care Trust:</strong> ${HSCTNAME}</li>
+                        //               <li><strong>Assembly Area Name (2024):</strong> ${AA2024NAME}</li>
+                        //               <li><strong>Local Government District:</strong> ${LGD2014NAME}</li>
+                        //              <li><strong>District Electoral Area:</strong> ${DEA2014NAME}</li>`;
+                                     
+                        // listHTML2 += `<li><strong>Super Data Zone:</strong> ${SDZ2021_name}</li>
+                        //              <li><strong>Data Zone:</strong> ${DZ2021_name}</li>
+                        //              <li><strong>Super Output Area (2011) :</strong> ${DZ2021_name}</li>
+                        //              <li><strong>Urban / Rural:</strong> ${SETTLEMENT15_URBAN_RURAL}</li>
+                        //               <li><strong>Settlement:</strong> ${SETTLEMENT15}</li>`;
+
+
+                            tableHTMLadmin += `<tr><td>Health and Social Care Trust</td><td>${HSCTNAME}</td><td></td></tr>`;
+                            tableHTMLadmin += `<tr><td>Assembly Area Name (2024)</td><td>${AA2024NAME}</td><td>${AA2024}</td></tr>`;
+                            tableHTMLadmin += `<tr><td>Local Government District</td><td>${LGD2014NAME}</td><td>${LGD2014}</td></tr>`;
+                            tableHTMLadmin += `<tr><td>District Electoral Area</td><td>${DEA2014NAME}</td><td>${DEA2014}</td></tr>`;
+                            tableHTMLadmin += `<tr><td>Electoral Ward</td><td>${WARD2014NAME}</td><td>${WARD2014}</td></tr>`;
+                            tableHTMLadmin += `<tr><td>Assembly Area Name (2008)</td><td>${AA2008NAME}</td><td>${AA2008}</td></tr>`;
+
+                            tableHTMLstats += `<tr><td>Super Data Zone</td><td>${SDZ2021_name}</td><td>${SDZ2021}</td></tr>`;
+                            tableHTMLstats += `<tr><td>Data Zone</td><td>${DZ2021_name}</td><td>${DZ2021}</td></tr>`;
+                            tableHTMLstats += `<tr><td>Super Output Area (2011)</td><td>${SOA2001}</td><td>${SOA2001NAME}</td></tr>`;
+                            tableHTMLstats += `<tr><td>Small Area (2011)</td><td>${SA2011}</td><td></td></tr>`;
+
+                            tableHTMLother += `<tr><td>Urban / Rural</td><td>${SETTLEMENT15_URBAN_RURAL}</td><td>code</td></tr>`;
+                            tableHTMLother += `<tr><td>Settlement</td><td>${SETTLEMENT15}</td><td>code</td></tr>`;
+
+
                         found = true;
                     }
                 });
@@ -230,10 +264,15 @@ CSS: Adds basic styling for input, buttons, suggestions, and result display. -->
                 listHTML += "</ul>";
                 listHTML2 += "</ul>";
 
+                tableHTMLadmin += "</table>";
+                tableHTMLstats += "</table>";
+                tableHTMLother += "</table>";
+
                 // Display either results or 'not found' message
                 document.getElementById('resultTable').innerHTML = found 
-                    ? pHTML + "<p>Geographies in Northern Ireland Local Statistics Explorer</p>" + listHTML + 
-                      "<p>Geographies not in Northern Ireland Local Statistics Explorer</p>" + listHTML2
+                    ? pHTML + "<p><strong>Administrative Geographies / Areas in Northern Ireland</strong></p>" + tableHTMLadmin +
+                      "<p><strong>Statistical Geographies / Areas in Northern Ireland</strong></p>" +  tableHTMLstats +
+                      "<p><strong>Other Geographies / Areas in Northern Ireland</strong></p>" +  tableHTMLother
                     : 'Postcode not found.';
             })
             .catch(error => {
@@ -259,7 +298,7 @@ CSS: Adds basic styling for input, buttons, suggestions, and result display. -->
     }
 
     .container2 {
-        max-width: 600px;
+        max-width: 800px;
         margin: 0 auto;
         padding: 20px;
         background-color: #fff;
@@ -389,4 +428,25 @@ CSS: Adds basic styling for input, buttons, suggestions, and result display. -->
     padding: 10px 0;
     font-size: 1em;
   }
+
+  table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            border: 1px solid #ddd;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: left;
+            border: 1px solid #ddd;
+            width: 33%; /* Expand columns equally */
+        }
+
+        th {
+            background-color: #f2f2f2;
+            font-weight: normal; /* Remove bold from headers */
+        }
+
+
 </style>
