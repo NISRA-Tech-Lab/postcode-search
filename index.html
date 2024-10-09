@@ -29,10 +29,12 @@ CSS: Adds basic styling for input, buttons, suggestions, and result display. -->
 
         <nav class="warning">
             <div class="col-wide middle text-center">
-                <strong>This is a prototype application.  We welcome feedback from users through our 
+                <div class="row">
+                    <strong>This is a prototype application.  We welcome feedback from users through our 
                     <a style="text-decoration-color: #00205b; font-size: 1.2em"href="https://dttselfserve.nidirect.gov.uk/NISRA/RateIt#/postcode_search" target="_blank"><span style="color: #ffffff;">short survey</span>
-                      <!-- <img class = "new-tab" style = "height:70" src = "/images/opens-new-tab.svg" alt = "Link opens in new tab"></a> -->
+                    <img class = "new-tab" style = "height:15px" src = "/images/opens-new-tab.svg" alt = "Link opens in new tab"></a> 
                   </strong>
+                </div>
               
             </div>
           </nav>
@@ -53,36 +55,46 @@ CSS: Adds basic styling for input, buttons, suggestions, and result display. -->
 </header>
 
 
-        <!-- Title and Description -->
+<div class="row">
+    <div class="column" >
         <p>Enter a postcode to see the administrative and statistical areas it sits within</p>
-    <div class="container2 div-grey-box" >
+    </div>    </div>
 
-        
-        
-        <!-- Input box for postcode search with dynamic filtering on input -->
+        <div class="container2 div-grey-box" >
+
+          <div class="column left" >
+                <!-- Title and Description -->
+
+            <!-- Input box for postcode search with dynamic filtering on input -->
         <input type="text" id="searchInput" placeholder="Enter postcode..." oninput="filterPostcodes()">
         
         <!-- Suggestions box for displaying matching postcodes as user types -->
         <div id="suggestions"></div>
-        
+
+        </div>
+
+           <div class="column right" >
         <!-- Button to perform a search based on the input postcode -->
         <button onclick="search()">Search</button>
+        </div>
         
         <!-- Result area for displaying information related to the selected postcode -->
-        <div id="resultTable"></div>
-
+        <div class="column" >
+            <div id="resultTable"></div>
+        </div>
 
 
     </div>
-
-        <p><strong>Notes:</strong></p>
-    <p>This postcode search is based on the <a href="https://www.nisra.gov.uk/support/geography/central-postcode-directory">Central Postcode Directory (CPD)</a>.  
-        <p>The CPD is a list of postcodes in Northern Ireland, with the average location of the addresses in each postcode. 
-            It is used to provide a direct lookup between postcodes and a range of administrative and statistical areas or geographies including Local Government Districts, District Electoral Areas, Data Zones, Super Data Zones and Settlements.   </p>
-        <p>The version of the CPD used is July 2024.</p>
-    <p>The location of addresses, postcodes and the boundaries of the areas can be explored in more detail using the <a href = "https://apps.spatialni.gov.uk/NISRABoundariesApplication/index.html">NISRA Boundaries Application</a> </p>
-
-
+    <div class="row">
+        <div class="column" >
+            <p><strong>Notes:</strong></p>
+            <p>This postcode search is based on the <a href="https://www.nisra.gov.uk/support/geography/central-postcode-directory">Central Postcode Directory (CPD)</a>.  
+            <p>The CPD is a list of postcodes in Northern Ireland, with the average location of the addresses in each postcode. 
+                It is used to provide a direct lookup between postcodes and a range of administrative and statistical areas or geographies including Local Government Districts, District Electoral Areas, Data Zones, Super Data Zones and Settlements.   </p>
+            <p>The version of the CPD used is July 2024.</p>
+            <p>The location of addresses, postcodes and the boundaries of the areas can be explored in more detail using the <a href = "https://apps.spatialni.gov.uk/NISRABoundariesApplication/index.html">NISRA Boundaries Application</a> </p>
+        </div>
+    </div>
     <!-- Footer section -->
         <footer style="color: #ffffff; background-color: #00205b;">
             <div class="col-wide" data-analytics="footer">
@@ -305,10 +317,12 @@ CSS: Adds basic styling for input, buttons, suggestions, and result display. -->
         margin-bottom: 10px;
         border: 1px solid #ddd;
         border-radius: 4px;
+        font-size: 18px;
     }
 
     #suggestions div {
         padding: 5px;
+        background-color: #eee;
         cursor: pointer;
     }
 
@@ -370,12 +384,14 @@ CSS: Adds basic styling for input, buttons, suggestions, and result display. -->
 
     .column {
   		float: left;
-  		padding: 10px;
-  		margin: 1.1em;
+  		padding: 1px;
+  		margin: 0 1.1em;
 	}
-	.left {
-		max-width: 40%;
-	}
+
+    .left {
+		max-width: 40%;}
+    
+
 	.right {
 		max-width: 60%;
 	}
@@ -435,11 +451,11 @@ CSS: Adds basic styling for input, buttons, suggestions, and result display. -->
             font-weight: normal; /* Remove bold from headers */
         }
 
-        .div-grey-box {
-	line-height: 1.78;
-	overflow: hidden;
-	box-shadow: 2px 2px 4px #4140424d;
-	background-color: #f5f5f6;
-	padding: 16px 16px;
+    .div-grey-box {
+            line-height: 1.78;
+            overflow: hidden;
+            box-shadow: 2px 2px 4px #4140424d;
+            background-color: #f5f5f6;
+            padding: 16px 16px;
 }
 </style>
