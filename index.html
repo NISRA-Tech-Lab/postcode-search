@@ -22,62 +22,59 @@ CSS: Adds basic styling for input, buttons, suggestions, and result display. -->
 
 <body>
 
+    <div id = "cookie-banner" role = "cookies-information"></div>
 
-    <!-- Header with Logo and Navigation Links -->
-
-    <div class="container">
-
-        <nav class="warning">
-            <div class="col-wide middle text-center">
-                <div class="row">
-                    <strong>This is a prototype application.  We welcome feedback from users through our 
-                    <a style="text-decoration-color: #00205b; font-size: 1.2em"href="https://dttselfserve.nidirect.gov.uk/NISRA/RateIt#/postcode_search" 
+    <nav class="warning">
+        <div class="col-wide middle text-center">
+            <div class="row">
+            <strong>This is a prototype application.  We welcome feedback from users through our 
+                <a style="text-decoration-color: #00205b; font-size: 1.2em"href="https://dttselfserve.nidirect.gov.uk/NISRA/RateIt#/postcode_search" 
                     target="_blank"><span style="color: #ffffff;">short survey</span>
                     <img class = "new-tab" height = "15" src = "images/opens-new-tab.svg" alt = "Link opens in new tab"></a> 
-                  </strong>
+            </strong>
+            </div>
+        </div>
+    </nav>
+
+    <header style="color: #ffffff; background-color: #00205b;">
+        <div class="col-wide" data-analytics="footer">
+            <div class="row">
+                <div class="column left">
+                    <div class="col" style="padding-right:0px;">
+                        <a href="https://www.nisra.gov.uk/" target="_blank" rel="noopener noreferrer"><img src="images/nisra-only-white.png" height="70"></a>
+                    </div>
                 </div>
-              
+                <div style = "display: flex; flex-direction:column; justify-content: right; align-items: center">
+                    <h1 style="font-size: 2.5em; font-weight: bold;color: #ffffff; line-height: 1em; margin-bottom: 10px;">Find my areas</h1>
+                </div>
             </div>
-          </nav>
-      
+        </div>
+    </header>    
 
- <!-- Footer section -->
- <header style="color: #ffffff; background-color: #00205b;">
-    <div class="col-wide" data-analytics="footer">
+    <div class="container">   
+
         <div class="row">
-            <div class="column left">
-                <div class="col" style="padding-right:0px;"><a href="https://www.nisra.gov.uk/" target="_blank" 
-                    rel="noopener noreferrer"><img src="images/nisra-only-white.png" height="70"></a></div>
+            <div class="column" >
+                <p>Enter a postcode to see the administrative and statistical areas it sits within</p>
             </div>
-            <div style = "display: flex; flex-direction:column; justify-content: right; align-items: center">
-                <h1 style="font-size: 2.5em; font-weight: bold;color: #ffffff; line-height: 1em; margin-bottom: 10px;">Find my areas</h1>
-            </div>
-
-
-</header>
-
-
-<div class="row">
-    <div class="column" >
-        <p>Enter a postcode to see the administrative and statistical areas it sits within</p>
-    </div>    </div>
+        </div>
 
         <div class="container2 div-grey-box" >
 
-          <div class="column left" >
-                <!-- Title and Description -->
+        <div class="column left" >
+            <!-- Title and Description -->
 
             <!-- Input box for postcode search with dynamic filtering on input -->
-        <input type="text" id="searchInput" placeholder="Enter postcode..." oninput="filterPostcodes()">
+            <input type="text" id="searchInput" placeholder="Enter postcode..." oninput="filterPostcodes()">
         
-        <!-- Suggestions box for displaying matching postcodes as user types -->
-        <div id="suggestions"></div>
+            <!-- Suggestions box for displaying matching postcodes as user types -->
+            <div id="suggestions"></div>
 
         </div>
 
-           <div class="column right" >
-        <!-- Button to perform a search based on the input postcode -->
-        <button onclick="search()">Search</button>
+        <div class="column right" >
+            <!-- Button to perform a search based on the input postcode -->
+            <button onclick="search()">Search</button>
         </div>
         
         <!-- Result area for displaying information related to the selected postcode -->
@@ -85,74 +82,72 @@ CSS: Adds basic styling for input, buttons, suggestions, and result display. -->
             <div id="resultTable"></div>
         </div>
 
-
     </div>
+
     <div class="row">
+
         <div class="column" >
+
             <p><strong>Notes:</strong></p>
-            <p>This postcode search is based on the <a href="https://www.nisra.gov.uk/support/geography/central-postcode-directory">Central Postcode Directory (CPD)</a>.  
-            <p>The CPD is a list of postcodes in Northern Ireland, with the average location of the addresses in each postcode. 
-                It is used to provide a direct lookup between postcodes and a range of administrative and statistical areas or geographies including Local Government Districts, District Electoral Areas, Data Zones, Super Data Zones and Settlements.   </p>
+            <p>This postcode search is based on the <a href="https://www.nisra.gov.uk/support/geography/central-postcode-directory">Central Postcode Directory (CPD)</a>.</p>
+            <p>The CPD is a list of postcodes in Northern Ireland, with the average location of the addresses in each postcode. It is used to provide a direct lookup between postcodes and a range of administrative and statistical areas or geographies including Local Government Districts, District Electoral Areas, Data Zones, Super Data Zones and Settlements.</p>
             <p>The version of the CPD used is July 2024.</p>
             
             <div class="row">
 
-                
                 <div class="column left" style="padding-top: 30px; padding-left: 0px;">
-                    The location of addresses, postcodes and the boundaries of the areas can be explored 
-        in more detail using the <a href="https://apps.spatialni.gov.uk/NISRABoundariesApplication/index.html">
-            </a><a href = "https://apps.spatialni.gov.uk/NISRABoundariesApplication/index.html">NISRA Boundary Application</a> </p>
-        </div>
-        <div class="column right">
-                    <p><a href="https://apps.spatialni.gov.uk/NISRABoundariesApplication/index.html"><img src="images/nisraboundaryapplication.png" height="100"></a>
-                    </div>
-                 
+                    The location of addresses, postcodes and the boundaries of the areas can be explored in more detail using the
+                    <a href = "https://apps.spatialni.gov.uk/NISRABoundariesApplication/index.html">NISRA Boundary Application</a> 
+                </div>
+
+                <div class="column right">
+                    <a href="https://apps.spatialni.gov.uk/NISRABoundariesApplication/index.html"><img src="images/nisraboundaryapplication.png" height="100"></a>
+                </div>
+
+            </div>                 
        
         </div>
-            </div>
-    </div>
-    <!-- Footer section -->
-        <footer style="color: #ffffff; background-color: #00205b;">
-            <div class="col-wide" data-analytics="footer">
-                <div class="row">
-                    <div class="column left">
-                        <footerheading>Links</footerheading>
-                        <ul>
-                        <li><a href="https://www.nisra.gov.uk/" class="link" style="color: #ffffff">NISRA</a></li>
-                    <li><a href="https://www.nidirect.gov.uk" class="link" style="color: #ffffff">NIDirect</a></li>
-                            <li><a href="https://www.gov.uk/" class="link" style="color: #ffffff">GOV.UK</a></li>
-                            <li><a href="https://data.nisra.gov.uk/" class="link" style="color: #ffffff">NISRA Data Portal</a></li>
-                            <li><a href="https://build.nisra.gov.uk/" class="link" style="color: #ffffff">Census Flexible Table Builder</a></li>
-                        </ul>
-                    </div>
-                    <div class="column right">
-                        <footerheading>Follow NISRA</h3></footerheading>
-                        <ul>
-                            <li><a href="https://www.facebook.com/nisra.gov.uk" class="link" style="color: #ffffff">Facebook</a></li>
-                            <li><a href="https://twitter.com/NISRA" class="link" style="color: #ffffff">X (Twitter)</a></li>
-                            <li><a href="https://www.youtube.com/user/nisrastats" class="link" style="color: #ffffff">YouTube</a></li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="flex-list">
-                    <ul>
-                        <li><a href="https://www.nisra.gov.uk/crown-copyright" class="link" style="color: #ffffff">&copy Crown Copyright</a></li>
-                        <li><a href="https://www.nisra.gov.uk/contact" class="link" style="color: #ffffff">Contact us</a></li>
-                        <li><a href="https://www.nisra.gov.uk/terms-and-conditions" class="link" style="color: #ffffff">Terms and conditions</a></li>
-                        <li><a href="https://www.nisra.gov.uk/cookies" class="link" style="color: #ffffff">Cookies</a></li>
-                        <li><a href="https://www.nisra.gov.uk/nisra-privacy-notice" class="link" style="color: #ffffff">Privacy</a></li>
-                        <li><a href="https://datavis.nisra.gov.uk/dissemination/accessibility-statement-visualisations.html" class="link" style="color: #ffffff">Accessibility Statement</a></li>
-                    </ul>
-                </div>
-            </div>
-        </footer>
-
 
     </div>
 
+</div>
 
 
- 
+ <!-- Footer section -->
+ <footer style="color: #ffffff; background-color: #00205b;">
+    <div class="col-wide" data-analytics="footer">
+        <div class="row">
+            <div class="column left">
+                <footerheading>Links</footerheading>
+                <ul>
+                <li><a href="https://www.nisra.gov.uk/" class="link" style="color: #ffffff">NISRA</a></li>
+            <li><a href="https://www.nidirect.gov.uk" class="link" style="color: #ffffff">NIDirect</a></li>
+                    <li><a href="https://www.gov.uk/" class="link" style="color: #ffffff">GOV.UK</a></li>
+                    <li><a href="https://data.nisra.gov.uk/" class="link" style="color: #ffffff">NISRA Data Portal</a></li>
+                    <li><a href="https://build.nisra.gov.uk/" class="link" style="color: #ffffff">Census Flexible Table Builder</a></li>
+                </ul>
+            </div>
+            <div class="column right">
+                <footerheading>Follow NISRA</h3></footerheading>
+                <ul>
+                    <li><a href="https://www.facebook.com/nisra.gov.uk" class="link" style="color: #ffffff">Facebook</a></li>
+                    <li><a href="https://twitter.com/NISRA" class="link" style="color: #ffffff">X (Twitter)</a></li>
+                    <li><a href="https://www.youtube.com/user/nisrastats" class="link" style="color: #ffffff">YouTube</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="flex-list">
+            <ul>
+                <li><a href="https://www.nisra.gov.uk/crown-copyright" class="link" style="color: #ffffff">&copy Crown Copyright</a></li>
+                <li><a href="https://www.nisra.gov.uk/contact" class="link" style="color: #ffffff">Contact us</a></li>
+                <li><a href="https://www.nisra.gov.uk/terms-and-conditions" class="link" style="color: #ffffff">Terms and conditions</a></li>
+                <li><a href="https://www.nisra.gov.uk/cookies" class="link" style="color: #ffffff">Cookies</a></li>
+                <li><a href="https://www.nisra.gov.uk/nisra-privacy-notice" class="link" style="color: #ffffff">Privacy</a></li>
+                <li><a href="https://datavis.nisra.gov.uk/dissemination/accessibility-statement-visualisations.html" class="link" style="color: #ffffff">Accessibility Statement</a></li>
+            </ul>
+        </div>
+    </div>
+</footer>
 
 </body>
 
@@ -188,7 +183,7 @@ CSS: Adds basic styling for input, buttons, suggestions, and result display. -->
         const suggestions = postcodeData.filter(postcode => postcode.includes(searchTerm)).slice(0, 10);
 
         // Generate HTML for suggestions and inject into `#suggestions` div
-        const suggestionsHTML = suggestions.map(postcode => `<div onclick="selectPostcode('${postcode}')">${postcode}</div>`).join('');
+        const suggestionsHTML = suggestions.map(postcode => `<div onclick="selectPostcode('${postcode}')">${postcode.slice(0, -3)} ${postcode.substr(-3)}</div>`).join('');
         document.getElementById('suggestions').innerHTML = suggestionsHTML || '<div>No matching postcodes found.</div>';
     }
 
@@ -251,11 +246,12 @@ CSS: Adds basic styling for input, buttons, suggestions, and result display. -->
                         const SOA2001NAME = columns[26].trim().toUpperCase();
                         const SETTLEMENT15 = columns[30].trim().toUpperCase();
                         const SETTLEMENT15_URBAN_RURAL = columns[31].trim().toUpperCase();
+                        const LATITUDE = columns[32].trim();
+                        const LONGITUDE = columns[33].trim();
+
 
                         // Format the result with matched data
                         pHTML += `<strong>Postcode:</strong> ${postcode.slice(0, -3)} ${postcode.substr(-3)}`;
-                       
-
 
                             tableHTMLadmin += `<tr><td>Health and Social Care Trust</td><td>${HSCT}</td><td>${HSCTNAME}</td></tr>`;
                             tableHTMLadmin += `<tr><td>Assembly Area Name (2024)</td><td>${AA2024}</td><td>${AA2024NAME}</td></tr>`;
@@ -297,8 +293,95 @@ CSS: Adds basic styling for input, buttons, suggestions, and result display. -->
             });
     }
 
+
+    // Function to set position of footer
+    function footer_position () {
+        let window_height = window.innerHeight;       
+        let body_height = document.getElementsByClassName("warning")[0].clientHeight + document.getElementsByTagName("header")[0].clientHeight + document.getElementsByClassName("container")[0].clientHeight;
+        let footer_height = document.getElementsByTagName("footer")[0].clientHeight;
+
+        if (body_height + footer_height < window_height) {
+            document.getElementsByTagName("footer")[0].style.marginTop = (window_height - body_height - footer_height - 40) + "px";
+        } else {
+            document.getElementsByTagName("footer")[0].style.marginTop = "20px";
+        }
+    }
+
+
+    let cookieBanner = document.getElementById('cookie-banner');
+
+    cookieBanner.classList.add("cookies-infobar");
+    cookieBanner.innerHTML = 
+            '<iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KF6WGSG" height = "0" width = "0" style = "display:none; visibility:hidden;"></iframe>' +
+            '<div>' +
+            '<p><strong>Cookies on the Postcode Search webpage</strong></p>' +
+            '<p>This prototype web page places small amounts of information known as cookies on your device. <a href = "https://www.nisra.gov.uk/cookies" class = "cookiesbarlink" target = "_blank" rel = "noopener noreferrer">Find out more about cookies</a>.</p>' +
+            '<button id = "accept-cookies" class = "cookies-infobar_btn">Accept cookies</button>' +
+            '<button id = "reject-cookies" class = "cookies-infobar_btn_reject">Reject cookies</button>' +
+            '</div>';
+    
+    function loadGoogleAnalytics() {
+
+        (function(w, d, s, l, i){
+        w[l] = w[l]||[];
+        w[l].push({'gtm.start': new Date().getTime(),
+                    event:'gtm.js'});
+        var f = d.getElementsByTagName(s)[0],
+            j = d.createElement(s),
+            dl = l !='dataLayer'?'&l='+l: '';
+        j.async = true;
+        j.src = 'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
+        f.parentNode.insertBefore(j,f);
+    })
+    (window,document,'script','dataLayer','GTM-KF6WGSG');
+
+    }
+
+    today = new Date();
+
+    document.getElementById('accept-cookies').onclick = function() {
+    localStorage.setItem('cookie_answered', true);
+    localStorage.setItem('cookie_date', today);
+    cookieBanner.style.display = 'none';
+    loadGoogleAnalytics();
+    }
+
+    document.getElementById('reject-cookies').onclick = function() {
+    localStorage.setItem('cookie_answered', true);
+    localStorage.setItem('cookie_date', today);
+    cookieBanner.style.display = 'none';
+    }
+
+    function showCookieBanner() {
+
+    diff = (today - new Date(localStorage.cookie_date)) / 1000 / 60 / 60 / 24;
+
+    if (diff > 365) {
+        localStorage.removeItem("cookie_answered");
+        localStorage.removeItem("cookie_date");
+    }
+
+    if (!localStorage.cookie_answered) {
+        cookieBanner.style.display = 'block';
+    }
+    };
+
+    window.setInterval(function() {
+    if (document.cookie == "") {
+        localStorage.removeItem("cookie_answered");
+        localStorage.removeItem("cookie_date");
+    }
+    } , 100)
+    
+
     // Load postcode data when the page loads
-    window.onload = loadPostcodes;
+    window.onload = function() {
+        loadPostcodes()
+        footer_position()
+        showCookieBanner()
+    };
+
+    window.onresize = footer_position;
 </script>
 
 <style>
@@ -311,6 +394,7 @@ CSS: Adds basic styling for input, buttons, suggestions, and result display. -->
         max-width: 1000px;
         margin: 0 auto;
         background-color: #fff;
+        margin-top: 20px;
     }
 
     .container2 {
@@ -450,29 +534,96 @@ CSS: Adds basic styling for input, buttons, suggestions, and result display. -->
   }
 
   table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-            border: 1px solid #ddd;
-        }
-
-        th, td {
-            padding: 3px;
-            text-align: left;
-            border: 1px solid #ddd;
-            width: 33%; /* Expand columns equally */
-
-        }
-
-        th {
-            font-weight: normal; /* Remove bold from headers */
-        }
-
-    .div-grey-box {
-            line-height: 1.78;
-            overflow: hidden;
-            box-shadow: 2px 2px 4px #4140424d;
-            background-color: #f5f5f6;
-            padding: 16px 16px;
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    border: 1px solid #ddd;
 }
+
+th, td {
+    padding: 3px;
+    text-align: left;
+    border: 1px solid #ddd;
+    width: 33%; /* Expand columns equally */
+
+}
+
+th {
+    font-weight: normal; /* Remove bold from headers */
+}
+
+.div-grey-box {
+    line-height: 1.78;
+    overflow: hidden;
+    box-shadow: 2px 2px 4px #4140424d;
+    background-color: #f5f5f6;
+    padding: 16px 16px;
+}
+
+iframe {
+    border: none;
+}
+
+#cookie-banner {
+	top: 0;
+	left: 0;
+	width: 100%;
+	background-color:#142062;
+	color:#FFF;
+	padding: 10px;
+	text-align: left;
+    display: none;
+}
+
+.cookies-infobar {
+    color: #fff;
+    width: 100%;
+    left: 0;
+    right: 0;
+    top: 0;
+    padding: 10px;
+    text-align: left;
+}
+
+.cookies-infobar.cookies-infobar_accepted {
+    display: none;
+}
+
+.cookies-infobar_wrapper {
+    margin: 10px;
+}
+
+.cookies-infobar a {
+    color: inherit;
+}
+
+.cookies-infobar_btn {
+  display: inline-block;
+  padding: 5px 10px;
+  background: #0f8243;
+  text-decoration: none;
+  color: #fff;
+  text-transform: none;
+  font-size: 1.2em;
+}
+
+a.cookies-infobar_btn, a.cookies-infobar_btn_reject {
+	color: #fff !important;
+}
+
+a.cookiesbarlink {
+    color: #2990FF;
+}
+
+.cookies-infobar_btn_reject {
+  display: inline-block;
+  padding: 5px 10px;
+  background: #6d6e72;
+  text-decoration: none;
+  border-radius: 3px;
+  color: #fff;
+  text-transform: none;
+  font-size: 1.2em;
+}
+
 </style>
