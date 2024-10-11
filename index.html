@@ -37,7 +37,7 @@ CSS: Adds basic styling for input, buttons, suggestions, and result display. -->
     </nav>
 
     <header style="color: #ffffff; background-color: #00205b;">
-        <div class="col-wide" data-analytics="footer">
+        <div class="col-wide centre-content" data-analytics="footer">
             <div class="row">
                 <div class="column left">
                     <div class="col" style="padding-right:0px;">
@@ -51,7 +51,7 @@ CSS: Adds basic styling for input, buttons, suggestions, and result display. -->
         </div>
     </header>    
 
-    <div class="container">   
+    <div id = "main-container" class="container">   
 
         <div class="row">
             <div class="column" >
@@ -115,7 +115,7 @@ CSS: Adds basic styling for input, buttons, suggestions, and result display. -->
 
  <!-- Footer section -->
  <footer style="color: #ffffff; background-color: #00205b;">
-    <div class="col-wide" data-analytics="footer">
+    <div class="col-wide centre-content" data-analytics="footer">
         <div class="row">
             <div class="column left">
                 <footerheading>Links</footerheading>
@@ -297,7 +297,7 @@ CSS: Adds basic styling for input, buttons, suggestions, and result display. -->
     // Function to set position of footer
     function footer_position () {
         let window_height = window.innerHeight;       
-        let body_height = document.getElementsByClassName("warning")[0].clientHeight + document.getElementsByTagName("header")[0].clientHeight + document.getElementsByClassName("container")[0].clientHeight;
+        let body_height = document.getElementsByClassName("warning")[0].clientHeight + document.getElementsByTagName("header")[0].clientHeight + document.getElementById("main-container").clientHeight;
         let footer_height = document.getElementsByTagName("footer")[0].clientHeight;
 
         if (body_height + footer_height < window_height) {
@@ -624,6 +624,11 @@ a.cookiesbarlink {
   color: #fff;
   text-transform: none;
   font-size: 1.2em;
+}
+
+.centre-content {
+    max-width: 1000px;
+    margin: 0 auto;
 }
 
 </style>
