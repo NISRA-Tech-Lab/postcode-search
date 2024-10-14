@@ -291,7 +291,7 @@ CSS: Adds basic styling for input, buttons, suggestions, and result display. -->
 
                 // Display either results or 'not found' message
                 document.getElementById('resultTable').innerHTML = found 
-                    ? pHTML + "<p><strong>Administrative areas in Northern Ireland</strong></p>" + tableHTMLadmin +
+                    ? pHTML + "<p>Caution: this search should not be used to determine information about individual addresses because some postcodes span multiple boundaries. See note 3 below for more information.</p><p><strong>Administrative areas in Northern Ireland</strong></p>" + tableHTMLadmin +
                       "<p><strong>Statistical areas in Northern Ireland</strong></p>" +  tableHTMLstats +
                       "<p><strong>Other areas in Northern Ireland</strong></p>" +  tableHTMLother
                     : 'Postcode not found.';
