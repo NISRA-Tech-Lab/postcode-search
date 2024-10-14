@@ -22,37 +22,39 @@ CSS: Adds basic styling for input, buttons, suggestions, and result display. -->
 
 <body>
 
-    <div id = "cookie-banner" role = "cookies-information"></div>
-
-    <nav class="warning">
-        <div class="col-wide middle text-center">
-            <div class="row">
-            <strong>This is a prototype application.  We welcome feedback from users through our 
-                <a style="text-decoration-color: #00205b; font-size: 1.2em"href="https://dttselfserve.nidirect.gov.uk/NISRA/RateIt#/postcode_search" 
-                    target="_blank"><span style="color: #ffffff;">short survey</span>
-                    <img class = "new-tab" height = "15" src = "images/opens-new-tab.svg" alt = "Link opens in new tab"></a> 
-            </strong>
-            </div>
-        </div>
-    </nav>
-
-    <header style="color: #ffffff; background-color: #00205b;">
-        <div class="col-wide centre-content" data-analytics="footer">
-            <div class="row">
-                <div class="column left">
-                    <div class="col" style="padding-right:0px;">
-                        <a href="https://www.nisra.gov.uk/" target="_blank" rel="noopener noreferrer"><img src="images/nisra-only-white.png" height="70"></a>
-                    </div>
-                </div>
-                <div style = "display: flex; flex-direction:column; justify-content: right; align-items: center">
-                    <h1 style="font-size: 2.5em; font-weight: bold;color: #ffffff; line-height: 1em; margin-bottom: 10px;">Find my areas</h1>
-                </div>
-            </div>
-        </div>
-    </header>    
+    
 
     <div id = "main-container" class="container">   
 
+        <div id = "cookie-banner" role = "cookies-information"></div>
+
+        <nav class="warning">
+            <div class="col-wide middle text-center">
+                <div class="row">
+                <strong>This is a prototype application.  We welcome feedback from users through our 
+                    <a style="text-decoration-color: #00205b; font-size: 1.2em"href="https://dttselfserve.nidirect.gov.uk/NISRA/RateIt#/postcode_search" 
+                        target="_blank"><span style="color: #ffffff;">short survey</span>
+                        <img class = "new-tab" height = "15" src = "images/opens-new-tab.svg" alt = "Link opens in new tab"></a> 
+                </strong>
+                </div>
+            </div>
+        </nav>
+    
+        <header style="color: #ffffff; background-color: #00205b;">
+            <div class="col-wide centre-content" data-analytics="footer">
+                <div class="row">
+                    <div class="column left">
+                        <div class="col" style="padding-right:0px;">
+                            <a href="https://www.nisra.gov.uk/" target="_blank" rel="noopener noreferrer"><img src="images/nisra-only-white.png" height="70"></a>
+                        </div>
+                    </div>
+                    <div style = "display: flex; flex-direction:column; justify-content: right; align-items: center">
+                        <h1 style="font-size: 2.5em; font-weight: bold;color: #ffffff; line-height: 1em; margin-bottom: 10px;">Find my areas</h1>
+                    </div>
+                </div>
+            </div>
+        </header>    
+        
         <div class="row">
             <div class="column" >
                 <p>Enter a postcode to see the administrative and statistical areas it sits within</p>
@@ -90,9 +92,11 @@ CSS: Adds basic styling for input, buttons, suggestions, and result display. -->
 
                 <p><strong>Notes:</strong></p>
                 <ol>
-                    <li><p>This postcode search is based on the <a href="https://www.nisra.gov.uk/support/geography/central-postcode-directory">Central Postcode Directory (CPD)</a>.</p></li>
-                    <li><p>The CPD is a list of postcodes in Northern Ireland, with the average location of the addresses in each postcode. It is used to provide a direct lookup between postcodes and a range of administrative and statistical areas or geographies including Local Government Districts, District Electoral Areas, Data Zones, Super Data Zones and Settlements.</p></li>
-                    <li><p>The version of the CPD used is July 2024.</p></li>
+                    <li><p>This postcode search is based on the <a href="https://www.nisra.gov.uk/support/geography/central-postcode-directory">Central Postcode Directory (CPD)</a> last updated in July 2024.</p></li>
+                    <li><p>The CPD is a list of postcodes in Northern Ireland. It maps the postcodes to a range of administrative and statistical areas including Local Government Districts, District Electoral Areas, Data Zones, Super Data Zones and Settlements.</p></li>
+                          <li><p>Addresses for most postcodes are located entirely within an area, but some postcodes straddle the boundaries of areas.  The CPD uses the address in the centre of each postcode area (the postcode centroid).  
+                          This means that some addresses in a postcode may be in a different area than allocated by the CPD.</li>
+                        </p></li>
                 </ol>
                 
                 <div class="row">
@@ -257,11 +261,11 @@ CSS: Adds basic styling for input, buttons, suggestions, and result display. -->
                         pHTML += `<strong>Postcode:</strong> ${postcode.slice(0, -3)} ${postcode.substr(-3)}`;
 
                             tableHTMLadmin += `<tr><td>Health and Social Care Trust</td><td>${HSCT}</td><td>${HSCTNAME}</td></tr>`;
-                            tableHTMLadmin += `<tr><td>Assembly Area Name (2024)</td><td>${AA2024}</td><td>${AA2024NAME}</td></tr>`;
+                            tableHTMLadmin += `<tr><td>Assembly Area (2024)</td><td>${AA2024}</td><td>${AA2024NAME}</td></tr>`;
                             tableHTMLadmin += `<tr><td>Local Government District (2014)</td><td>${LGD2014}</td><td>${LGD2014NAME}</td></tr>`;
                             tableHTMLadmin += `<tr><td>District Electoral Area (2014)</td><td>${DEA2014}</td><td>${DEA2014NAME}</td></tr>`;
                             tableHTMLadmin += `<tr><td>Electoral Ward (2014)</td><td>${WARD2014}</td><td>${WARD2014NAME}</td></tr>`;
-                            tableHTMLadmin += `<tr><td>Assembly Area Name (2008)</td><td>${AA2008}</td><td>${AA2008NAME}</td></tr>`;
+                            tableHTMLadmin += `<tr><td>Assembly Area (2008)</td><td>${AA2008}</td><td>${AA2008NAME}</td></tr>`;
 
                             tableHTMLstats += `<tr><td>Super Data Zone (2021)</td><td>${SDZ2021}</td><td>${SDZ2021_name}</td></tr>`;
                             tableHTMLstats += `<tr><td>Data Zone (2021)</td><td>${DZ2021}</td><td>${DZ2021_name}</td></tr>`;
