@@ -168,12 +168,14 @@ CSS: Adds basic styling for input, buttons, suggestions, and result display. -->
 
     // Load postcodes from CSV file on page load, storing in `postcodeData` array
     function loadPostcodes() {
-        fetch('CPD_LIGHT_JULY_2024.csv')
+        fetch('CPD_LIGHT.txt')
             .then(response => response.text())
             .then(data => {
                 // Split CSV data into rows, taking only the first column (postcode) from each row
-                postcodeData = data.split('\n').map(row => row.split(',')[0].trim());
+                postcodeData = data.split('\n').map(row => row.split('\t')[0].trim());
             })
+
+
             .catch(error => console.error('Error loading postcode data:', error));
     }
 
@@ -197,107 +199,105 @@ CSS: Adds basic styling for input, buttons, suggestions, and result display. -->
         search(); // Perform search with selected postcode
     }
 
-    // Main search function to find and display data related to the input postcode
     function search() {
-        const searchTerm = normalizePostcode(document.getElementById('searchInput').value);
+    const searchTerm = normalizePostcode(document.getElementById('searchInput').value);
 
-        // Check if postcode is entered
-        if (searchTerm === '') {
-            alert('Please enter a postcode.');
-            return;
-        }
+    // Check if postcode is entered
+    if (searchTerm === '') {
+        alert('Please enter a postcode.');
+        return;
+    }
 
-        // Fetch data from CSV file
-        fetch('CPD_LIGHT_JULY_2024.csv')
-            .then(response => response.text())
-            .then(data => {
-                const rows = data.split('\n');
-                let found = false; // Flag to track if postcode is found
+    // Fetch data from tab-delimited text file
+    fetch('CPD_LIGHT.txt')
+        .then(response => response.text())
+        .then(data => {
+            const rows = data.split('\n');
+            let found = false; // Flag to track if postcode is found
 
-                // Initialize HTML for result display
-                let pHTML = "<p>";
-               
-                let tableHTMLadmin = "<table><tr><th>Area type</th><th>Area code</th><th>Area name</th></tr>";
-                let tableHTMLstats = "<table><tr><th>Area type</th><th>Area code</th><th>Area name</th></tr>";
-                let tableHTMLother = "<table><tr><th>Area type</th><th>Area code</th><th>Area name</th></tr>";
+            // Initialize HTML for result display
+            let pHTML = "<p>";
+           
+            let tableHTMLadmin = "<table><tr><th>Area type</th><th>Area code</th><th>Area name</th></tr>";
+            let tableHTMLstats = "<table><tr><th>Area type</th><th>Area code</th><th>Area name</th></tr>";
+            let tableHTMLother = "<table><tr><th>Area type</th><th>Area code</th><th>Area name</th></tr>";
 
-                rows.forEach(row => {
-                    const columns = row.split(',');
+            rows.forEach(row => {
+                // Split the row by the tab delimiter
+                const columns = row.split('\t').map(col => col.trim());
+
+                // Ensure the row has enough columns before processing
                     const postcode = normalizePostcode(columns[0]);
 
-                    // Match the input postcode with CSV data
+                    // Match the input postcode with file data
                     if (postcode === searchTerm) {
                         // Extract specific fields related to the matched postcode
-                        const LGD2014 = columns[4].trim();
-                        const LGD2014NAME = columns[5].trim().toUpperCase();
-                        const WARD2014 = columns[6].trim();
-                        const WARD2014NAME = columns[7].trim().toUpperCase();
-                        const DEA2014 = columns[8].trim();
-                        const DEA2014NAME = columns[9].trim().toUpperCase();
-                        const AA2008 = columns[10].trim();
-                        const AA2008NAME = columns[11].trim().toUpperCase();
-                        const SDZ2021 = columns[20].trim();
-                        const SDZ2021_name = columns[21].trim().toUpperCase();
-                        const HSCT = columns[16].trim().toUpperCase();
-                        const HSCTNAME = columns[17].trim().toUpperCase();
-                        const DZ2021 = columns[18].trim();
-                        const DZ2021_name = columns[19].trim().toUpperCase();
-                        const AA2024 = columns[22].trim();
-                        const AA2024NAME = columns[23].trim().toUpperCase();
-                        const SA2011 = columns[24].trim();
-                        const SOA2001 = columns[25].trim();
-                        const SOA2001NAME = columns[26].trim().toUpperCase();
-                        const SETTLEMENT15 = columns[30].trim().toUpperCase();
-                        const SETTLEMENT15_URBAN_RURAL = columns[31].trim().toUpperCase();
-                        const LATITUDE = columns[32].trim();
-                        const LONGITUDE = columns[33].trim();
-
+                        const LGD2014 = columns[4];
+                        const LGD2014NAME = columns[5].toUpperCase();
+                        const WARD2014 = columns[6];
+                        const WARD2014NAME = columns[7].toUpperCase();
+                        const DEA2014 = columns[8];
+                        const DEA2014NAME = columns[9].toUpperCase();
+                        const AA2008 = columns[10];
+                        const AA2008NAME = columns[11].toUpperCase();
+                        const SDZ2021 = columns[20];
+                        const SDZ2021_name = columns[21].toUpperCase();
+                        const HSCT = columns[16].toUpperCase();
+                        const HSCTNAME = columns[17].toUpperCase();
+                        const DZ2021 = columns[18];
+                        const DZ2021_name = columns[19].toUpperCase();
+                        const AA2024 = columns[22];
+                        const AA2024NAME = columns[23].toUpperCase();
+                        const SA2011 = columns[24];
+                        const SOA2001 = columns[25];
+                        const SOA2001NAME = columns[26].toUpperCase();
+                        const SETTLEMENT15 = columns[30].toUpperCase();
+                        const SETTLEMENT15_URBAN_RURAL = columns[31].toUpperCase();
+                        const LATITUDE = columns[32];
+                        const LONGITUDE = columns[33];
 
                         // Format the result with matched data
                         pHTML += `<strong>Postcode:</strong> ${postcode.slice(0, -3)} ${postcode.substr(-3)}`;
 
-                            tableHTMLadmin += `<tr><td>Health and Social Care Trust</td><td>${HSCT}</td><td>${HSCTNAME}</td></tr>`;
-                            tableHTMLadmin += `<tr><td>Assembly Area (2024)</td><td>${AA2024}</td><td>${AA2024NAME}</td></tr>`;
-                            tableHTMLadmin += `<tr><td>Local Government District (2014)</td><td>${LGD2014}</td><td>${LGD2014NAME}</td></tr>`;
-                            tableHTMLadmin += `<tr><td>District Electoral Area (2014)</td><td>${DEA2014}</td><td>${DEA2014NAME}</td></tr>`;
-                            tableHTMLadmin += `<tr><td>Electoral Ward (2014)</td><td>${WARD2014}</td><td>${WARD2014NAME}</td></tr>`;
-                            tableHTMLadmin += `<tr><td>Assembly Area (2008)</td><td>${AA2008}</td><td>${AA2008NAME}</td></tr>`;
+                        tableHTMLadmin += `<tr><td>Health and Social Care Trust</td><td>${HSCT}</td><td>${HSCTNAME}</td></tr>`;
+                        tableHTMLadmin += `<tr><td>Assembly Area (2024)</td><td>${AA2024}</td><td>${AA2024NAME}</td></tr>`;
+                        tableHTMLadmin += `<tr><td>Local Government District (2014)</td><td>${LGD2014}</td><td>${LGD2014NAME}</td></tr>`;
+                        tableHTMLadmin += `<tr><td>District Electoral Area (2014)</td><td>${DEA2014}</td><td>${DEA2014NAME}</td></tr>`;
+                        tableHTMLadmin += `<tr><td>Electoral Ward (2014)</td><td>${WARD2014}</td><td>${WARD2014NAME}</td></tr>`;
+                        tableHTMLadmin += `<tr><td>Assembly Area (2008)</td><td>${AA2008}</td><td>${AA2008NAME}</td></tr>`;
 
-                            tableHTMLstats += `<tr><td>Super Data Zone (2021)</td><td>${SDZ2021}</td><td>${SDZ2021_name}</td></tr>`;
-                            tableHTMLstats += `<tr><td>Data Zone (2021)</td><td>${DZ2021}</td><td>${DZ2021_name}</td></tr>`;
-                            tableHTMLstats += `<tr><td>Super Output Area (2011)</td><td>${SOA2001}</td><td>${SOA2001NAME}</td></tr>`;
-                            tableHTMLstats += `<tr><td>Small Area (2011)</td><td>${SA2011}</td><td></td></tr>`;
+                        tableHTMLstats += `<tr><td>Super Data Zone (2021)</td><td>${SDZ2021}</td><td>${SDZ2021_name}</td></tr>`;
+                        tableHTMLstats += `<tr><td>Data Zone (2021)</td><td>${DZ2021}</td><td>${DZ2021_name}</td></tr>`;
+                        tableHTMLstats += `<tr><td>Super Output Area (2011)</td><td>${SOA2001}</td><td>${SOA2001NAME}</td></tr>`;
+                        tableHTMLstats += `<tr><td>Small Area (2011)</td><td>${SA2011}</td><td></td></tr>`;
 
-                            tableHTMLother += `<tr><td>Urban / Rural</td><td></td><td>${SETTLEMENT15_URBAN_RURAL}</td></tr>`;
-                            tableHTMLother += `<tr><td>Settlement (2015)</td><td></td><td>${SETTLEMENT15}</td></tr>`;
-
+                        tableHTMLother += `<tr><td>Urban / Rural</td><td></td><td>${SETTLEMENT15_URBAN_RURAL}</td></tr>`;
+                        tableHTMLother += `<tr><td>Settlement (2015)</td><td></td><td>${SETTLEMENT15}</td></tr>`;
 
                         found = true;
                     }
-                });
-
-                // Finalize HTML structure for results
-                pHTML += "</p>";
-              
-                tableHTMLadmin += "</table>";
-                tableHTMLstats += "</table>";
-                tableHTMLother += "</table>";
-
-                // Display either results or 'not found' message
-                document.getElementById('resultTable').innerHTML = found 
-                    ? pHTML + "<p>Caution: this search should not be used to determine information about individual addresses because some postcodes span multiple boundaries. See note 3 below for more information.</p><p><strong>Administrative areas in Northern Ireland</strong></p>" + tableHTMLadmin +
-                      "<p><strong>Statistical areas in Northern Ireland</strong></p>" +  tableHTMLstats +
-                      "<p><strong>Other areas in Northern Ireland</strong></p>" +  tableHTMLother
-                    : 'Postcode not found.';
-
-                
-            })
-            .catch(error => {
-                console.error('Error fetching data:', error);
-                alert('Error fetching data. Please try again.');
             });
 
-    }
+            // Finalize HTML structure for results
+            pHTML += "</p>";
+          
+            tableHTMLadmin += "</table>";
+            tableHTMLstats += "</table>";
+            tableHTMLother += "</table>";
+
+            // Display either results or 'not found' message
+            document.getElementById('resultTable').innerHTML = found 
+                ? pHTML + "<p>Caution: this search should not be used to determine information about individual addresses because some postcodes span multiple boundaries. See note 3 below for more information.</p><p><strong>Administrative areas in Northern Ireland</strong></p>" + tableHTMLadmin +
+                  "<p><strong>Statistical areas in Northern Ireland</strong></p>" +  tableHTMLstats +
+                  "<p><strong>Other areas in Northern Ireland</strong></p>" +  tableHTMLother
+                : 'Postcode not found.';
+        })
+        .catch(error => {
+            console.error('Error fetching data:', error);
+            alert('Error fetching data. Please try again.');
+        });
+}
+
 
 
     // Function to set position of footer
