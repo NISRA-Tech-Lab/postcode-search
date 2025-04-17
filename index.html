@@ -218,9 +218,9 @@ CSS: Adds basic styling for input, buttons, suggestions, and result display. -->
             // Initialize HTML for result display
             let pHTML = "<p>";
            
-            let tableHTMLadmin = "<table><tr><th>Area type</th><th>Area code</th><th>Area name</th></tr>";
-            let tableHTMLstats = "<table><tr><th>Area type</th><th>Area code</th><th>Area name</th></tr>";
-            let tableHTMLother = "<table><tr><th>Area type</th><th>Area code</th><th>Area name</th></tr>";
+            let tableHTMLadmin = "<table><tr><th>Area type</th><th>Area code</th><th>Area name</th><th>View</th></tr>";
+            let tableHTMLstats = "<table><tr><th>Area type</th><th>Area code</th><th>Area name</th><th>View</th></tr>";
+            let tableHTMLother = "<table><tr><th>Area type</th><th>Area code</th><th>Area name</th><th></th></tr>";
 
             rows.forEach(row => {
                 // Split the row by the tab delimiter
@@ -259,20 +259,21 @@ CSS: Adds basic styling for input, buttons, suggestions, and result display. -->
                         // Format the result with matched data
                         pHTML += `<strong>Postcode:</strong> ${postcode.slice(0, -3)} ${postcode.substr(-3)}`;
 
-                        tableHTMLadmin += `<tr><td>Health and Social Care Trust</td><td>${HSCT}</td><td>${HSCTNAME}</td></tr>`;
-                        tableHTMLadmin += `<tr><td>Assembly Area (2024)</td><td>${AA2024}</td><td>${AA2024NAME}</td></tr>`;
-                        tableHTMLadmin += `<tr><td>Local Government District (2014)</td><td>${LGD2014}</td><td>${LGD2014NAME}</td></tr>`;
-                        tableHTMLadmin += `<tr><td>District Electoral Area (2014)</td><td>${DEA2014}</td><td>${DEA2014NAME}</td></tr>`;
-                        tableHTMLadmin += `<tr><td>Electoral Ward (2014)</td><td>${WARD2014}</td><td>${WARD2014NAME}</td></tr>`;
-                        tableHTMLadmin += `<tr><td>Assembly Area (2008)</td><td>${AA2008}</td><td>${AA2008NAME}</td></tr>`;
+                        tableHTMLadmin += `<tr><td>Health and Social Care Trust</td><td>${HSCT}</td><td>${HSCTNAME}</td><td><a href="https://visual.nisra.gov.uk/?body=entity/las&boundary=HSCT&guid=${HSCT}">Making Life Better Public Health Profile</a></td></tr>`;
+                        tableHTMLadmin += `<tr><td>Assembly Area (2024)</td><td>${AA2024}</td><td>${AA2024NAME}</td><td></td></tr>`;
+                        tableHTMLadmin += `<tr><td>Local Government District (2014)</td><td>${LGD2014}</td><td>${LGD2014NAME}</td><td>
+                            <a href="https://explore.nisra.gov.uk/local-stats/${LGD2014}">Area Profile</a></td></tr>`;
+                        tableHTMLadmin += `<tr><td>District Electoral Area (2014)</td><td>${DEA2014}</td><td>${DEA2014NAME}</td><td><a href="https://explore.nisra.gov.uk/local-stats/${DEA2014}">Area Profile</a></td></tr>`;
+                        tableHTMLadmin += `<tr><td>Electoral Ward (2014)</td><td>${WARD2014}</td><td>${WARD2014NAME}</td><td></td></tr>`;
+                        tableHTMLadmin += `<tr><td>Assembly Area (2008)</td><td>${AA2008}</td><td>${AA2008NAME}</td><td></td></tr>`;
 
-                        tableHTMLstats += `<tr><td>Super Data Zone (2021)</td><td>${SDZ2021}</td><td>${SDZ2021_name}</td></tr>`;
-                        tableHTMLstats += `<tr><td>Data Zone (2021)</td><td>${DZ2021}</td><td>${DZ2021_name}</td></tr>`;
-                        tableHTMLstats += `<tr><td>Super Output Area (2011)</td><td>${SOA2001}</td><td>${SOA2001NAME}</td></tr>`;
+                        tableHTMLstats += `<tr><td>Super Data Zone (2021)</td><td>${SDZ2021}</td><td>${SDZ2021_name}</td><td><a href="https://explore.nisra.gov.uk/local-stats/${SDZ2021}">Area Profile</a></td></tr>`;
+                        tableHTMLstats += `<tr><td>Data Zone (2021)</td><td>${DZ2021}</td><td>${DZ2021_name}</td><td><a href="https://explore.nisra.gov.uk/local-stats/${DZ2021}">Area Profile</a></td></tr>`;
+                        tableHTMLstats += `<tr><td>Super Output Area (2011)</td><td>${SOA2001}</td><td>${SOA2001NAME}</td><td></td></tr>`;
                         tableHTMLstats += `<tr><td>Small Area (2011)</td><td>${SA2011}</td><td></td></tr>`;
 
-                        tableHTMLother += `<tr><td>Urban / Rural</td><td></td><td>${SETTLEMENT15_URBAN_RURAL}</td></tr>`;
-                        tableHTMLother += `<tr><td>Settlement (2015)</td><td></td><td>${SETTLEMENT15}</td></tr>`;
+                        tableHTMLother += `<tr><td>Urban / Rural</td><td></td><td>${SETTLEMENT15_URBAN_RURAL}</td><td></td></tr>`;
+                        tableHTMLother += `<tr><td>Settlement (2015)</td><td></td><td>${SETTLEMENT15}</td><td></td></tr>`;
 
                         found = true;
                     }
@@ -550,7 +551,7 @@ th, td {
     padding: 3px;
     text-align: left;
     border: 1px solid #ddd;
-    width: 33%; /* Expand columns equally */
+    width: 22%; /* Expand columns equally */
 
 }
 
