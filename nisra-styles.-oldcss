@@ -1,0 +1,347 @@
+/* ===========================
+   Base
+   =========================== */
+body {
+  font-family: 'Roboto', Arial, sans-serif;
+  font-size: 18px;
+  line-height: 1.5;           /* better readability than 1.0 */
+  font-weight: 400;
+  background-color: #f4f4f4;
+}
+
+/* Headings per style guide */
+h1 { font-size: 28px; line-height: 1.285; font-weight: 700; }
+@media (min-width: 992px) { h1 { font-size: 30px; line-height: 1.3; } }
+
+h2 { font-size: 24px; line-height: 1.333; font-weight: 400; }
+@media (min-width: 992px) { h2 { font-size: 25px; line-height: 1.32; } }
+
+h3 { font-size: 21px; line-height: 1.143; font-weight: 400; }
+@media (min-width: 992px) { h3 { font-size: 24px; line-height: 1.25; } }
+
+h4 { font-size: 18px; line-height: 1.333; font-weight: 400; }
+@media (min-width: 992px) { h4 { font-size: 21px; line-height: 1.286; } }
+
+/* Page background (main content area) */
+main { 
+  background-color: #f2f5f8;
+  min-height: 100vh;
+ }
+
+/* External link indicator (scope to main so footer links aren’t doubled) */
+main a[target="_blank"]::after {
+  content: "";
+  width: 14px; height: 11px;
+  margin: 5px; vertical-align: text-bottom; display: inline-block;
+
+  /* Use the SVG as a mask; then color it with Bootstrap’s variable */
+  -webkit-mask: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="14" height="11" viewBox="0 0 14 11"><g fill="none" stroke="%23000" stroke-width="1"><path d="M0 3h2V0h12v8h-2v3H0zm13-2H3v6h10zM2 4H1v4h1zm-1 6h10V8H1z"/></g></svg>') no-repeat center / contain;
+          mask: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="14" height="11" viewBox="0 0 14 11"><g fill="none" stroke="%23000" stroke-width="1"><path d="M0 3h2V0h12v8h-2v3H0zm13-2H3v6h10zM2 4H1v4h1zm-1 6h10V8H1z"/></g></svg>') no-repeat center / contain;
+  background-color: var(--bs-secondary-color, #6c757d); /* follows Bootstrap’s text-secondary */
+}
+
+.container {
+        max-width: 1200px;
+        margin: 20px auto 0;
+        background-color: #fff;
+        padding: 16px;
+        box-sizing: border-box;
+        margin-top: 20px;
+    }
+
+    .container2 {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #fff;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        box-sizing: border-box;
+    }
+
+
+/* ===========================
+   Brand & misc.
+   =========================== */
+.app-title { font-weight: 700; letter-spacing: 0.2px; }
+.img-50 { width: 50px; height: 50px; }
+
+/* ===========================
+   Footer
+   =========================== */
+.footer {
+  background-color: #00205b;
+  color: #fff;
+  margin-top: 30px;
+  border-top: 4px solid #3878c5;
+}
+.footer a {
+  color: #fff;
+  text-underline-offset: 3px;
+}
+.footer a:hover,
+.footer a:focus {
+  color: #fff;
+  text-decoration-thickness: 2px;
+}
+.footer-links { list-style: none; padding-left: 0; }
+.footer-links .list-inline-item { margin: 0 .5rem; }
+
+/* More vertical spacing in vertical lists */
+.footer ul.list-unstyled li { margin-bottom: 0.5rem; }
+
+/* Social icon hover */
+.footer .list-inline-item img {
+  transition: box-shadow 0.2s ease, border 0.2s ease;
+}
+.footer .list-inline-item img:hover {
+  border: 2px solid #fff;
+  box-shadow: 0 0 4px rgba(255, 255, 255, 0.6);
+  border-radius: 4px;
+}
+
+nav a {
+  color: #fff;
+}
+
+footer a[target="_blank"]::after,
+nav a[target="_blank"]::after {
+  content: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="14" height="11" viewBox="0 0 14 11"><g fill="none" stroke="white" stroke-width="1"><path d="M0 3h2V0h12v8h-2v3H0zm13-2H3v6h10zM2 4H1v4h1zm-1 6h10V8H1z"/></g></svg>');
+  display: inline-block;
+  width: 14px;
+  height: 11px;
+  margin: 0 5px 0 5px;
+  vertical-align: text-top;
+}
+/* body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+    } */
+
+    
+
+    .footer-container {
+        max-width: 1000px;
+        margin: 0 auto;
+        background-color: #00205b;
+    }
+
+    h1 {
+        text-align: center;
+        color: #333;
+    }
+
+    /* Styling for input and suggestions */
+    input[type="text"] {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 10px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        font-size: 18px;
+    }
+
+    #suggestions div {
+        padding: 5px;
+        background-color: #eee;
+        cursor: pointer;
+    }
+
+    #suggestions div:hover {
+        background-color: #eee;
+    }
+
+    button {
+        padding: 10px 20px;
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+    button:hover {
+        background-color: #0056b3;
+    }
+
+    /* Result display styling */
+    #result {
+        margin-top: 20px;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+    }
+
+    .column {
+  		/* float: left; */
+  		margin: 0; /* remove horizontal margins */
+      flex: 1 1 auto;
+      min-width: 0; /* critical for text wrapping in flex */
+	}
+
+/* Use flex-basis or width to control columns */
+.left  { flex: 1 1 40%; max-width: 40%; }
+.right { flex: 1 1 60%; max-width: 60%; }
+
+    /* .left {
+		max-width: 40%;}
+    
+
+	.right {
+		max-width: 60%;
+	} */
+
+  .row{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1em;
+  }
+.row:after { content: none; } /* remove clearfix */
+	/* .row:after {
+		content: "";
+		display: table;
+		clear: both;
+	} */
+	.flex-list {
+		position: relative;
+		margin: 1em;
+		overflow: hidden;
+
+	}
+	.flex-list ul {
+		display: flex;
+		flex-direction: row;
+		flex-wrap: wrap;
+		justify-content: space-between;
+		margin-left: -1px;
+    background-color: #00205b;
+	}
+	.flex-list li {
+		flex-grow: 1;
+		flex-basis: auto;
+		margin: .25em 0;
+		padding: 0 1em;
+		text-align: center;
+		border-left: 1px solid #ccc;
+		background-color: #00205b;
+		font-size: 14px;
+	}
+   
+    .warning {
+    color: white;
+    background-color: #3878c5;
+    margin-bottom: 0px;
+    padding: 10px 0;
+    font-size: 1em;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    border: 1px solid #ddd;
+}
+
+th, td {
+    padding: 3px;
+    text-align: left;
+    border: 1px solid #ddd;
+    width: 22%; /* Expand columns equally */
+
+}
+
+th {
+    font-weight: normal; /* Remove bold from headers */
+}
+
+.div-grey-box {
+    line-height: 1.78;
+    overflow: hidden;
+    box-shadow: 2px 2px 4px #4140424d;
+    background-color: #f5f5f6;
+    padding: 16px 16px;
+}
+
+iframe {
+    border: none;
+}
+
+#cookie-banner {
+	top: 0;
+	left: 0;
+	width: 100%;
+	background-color:#142062;
+	color:#FFF;
+	padding: 10px;
+	text-align: left;
+    display: none;
+}
+
+.cookies-infobar {
+    color: #fff;
+    width: 100%;
+    left: 0;
+    right: 0;
+    top: 0;
+    padding: 10px;
+    text-align: left;
+}
+
+.cookies-infobar.cookies-infobar_accepted {
+    display: none;
+}
+
+.cookies-infobar_wrapper {
+    margin: 10px;
+}
+
+.cookies-infobar a {
+    color: inherit;
+}
+
+.cookies-infobar_btn {
+  display: inline-block;
+  padding: 5px 10px;
+  background: #0f8243;
+  text-decoration: none;
+  color: #fff;
+  text-transform: none;
+  font-size: 1.2em;
+}
+
+a.cookies-infobar_btn, a.cookies-infobar_btn_reject {
+	color: #fff !important;
+}
+
+a.cookiesbarlink {
+    color: #2990FF;
+}
+
+.cookies-infobar_btn_reject {
+  display: inline-block;
+  padding: 5px 10px;
+  background: #6d6e72;
+  text-decoration: none;
+  border-radius: 3px;
+  color: #fff;
+  text-transform: none;
+  font-size: 1.2em;
+}
+
+.centre-content {
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.grid {
+    display: grid;
+    width: 100%;
+    grid-gap: 10px;
+    grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr));
+    justify-content: stretch;
+    page-break-inside: avoid;
+}
+
+.mb {
+    margin-bottom: 20px;
+}
