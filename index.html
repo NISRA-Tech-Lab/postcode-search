@@ -60,20 +60,17 @@ CSS: Adds basic styling for input, buttons, suggestions, and result display. -->
     </nav>
     
         
-        <header class="bg-nisra text-white">
-        <div class="container d-flex align-items-center justify-content-between py-3">
-          <!-- Logo (left) -->
-          <a class="navbar-brand ps-2 d-flex align-items-center me-auto" href="/">
-            <img src="images/nisra-only-white.svg" title="NISRA website" role="img" class="me-3">
-          </a>
+       <header class="app-header">
+  <div class="header-inner">
+    <a class="site-logo" href="https://www.nisra.gov.uk/">
+      <img src="images/nisra-only-white.svg" alt="NISRA homepage">
+    </a>
 
-          <!-- Heading (right) -->
-          <!-- <h1 class="mb-0 pe-2 text-white fs-2 app-title ms-2">Find my area</h1> -->
-           <h1 class="mb-0 fs-2 app-title text-start">Find my area</h1>
-        </div>
-        </header>
+    <h1 class="site-title">Find my area</h1>
+  </div>
+</header>
 
-<div id = "main-container" class="fma-container" role="main">           
+<main id = "main-container" class="fma-container">           
         <div class="app-row">
             <div class="column" >
                 <p>Enter a postcode to see the administrative and statistical areas it sits within.  </p>
@@ -123,11 +120,11 @@ CSS: Adds basic styling for input, buttons, suggestions, and result display. -->
                     </ol>
             </div>
         </div>
-    </div>
+</main>
 
-<footer class="footer py-4 bg-nisra text-white">
-
-      <div class="container">
+<footer class="footer">
+    <div class="footer-inner">
+      <!-- <div class="container"> -->
         <!-- 3 column section -->
         <div class="row gy-3 mb-3">
           <div class="col-md-4">
@@ -151,22 +148,27 @@ CSS: Adds basic styling for input, buttons, suggestions, and result display. -->
             <ul class="list-inline">
               <li class="list-inline-item">
                 <a href="https://www.facebook.com/nisra.gov.uk">
-                  <img src="images/facebook-brands-solid-full.svg" title="Facebook" role="img" class="img-50"/>
+                  <img src="images/facebook-brands-solid-full.svg" alt="NISRAFacebook" role="img" class="img-50"/>
                 </a>
               </li>
               <li class="list-inline-item">
                 <a href="https://x.com/NISRA/">
-                  <img src="images/x-twitter-brands-solid-full.svg" title="X" role="img" class="img-50"/>
+                  <img src="images/x-twitter-brands-solid-full.svg" alt="NISRA X" role="img" class="img-50"/>
                 </a>
               </li>
               <li class="list-inline-item">
                 <a href="https://www.youtube.com/user/nisrastats">
-                  <img src="images/youtube-brands-solid-full.svg" title="YouTube" role="img" class="img-50"/>
+                  <img src="images/youtube-brands-solid-full.svg" alt="NISRA YouTube" role="img" class="img-50"/>
                 </a>
               </li>
               <li class="list-inline-item">
                 <a href="https://www.linkedin.com/company/northern-ireland-statistics-and-research-agency/">
-                  <img src="images/linkedin-in-brands-solid-full.svg" title="Linkedin" role="img" class="img-50"/>
+                  <img src="images/linkedin-in-brands-solid-full.svg" alt="NISRA LinkedIn" role="img" class="img-50"/>
+                </a>
+              </li>
+              <li class="list-inline-item">
+                <a href="https://www.instagram.com/nisra.gov.uk/">
+                  <img src="images/instagram-brands-solid-full.svg" alt="NISRA Instagram" role="img" class="img-50"/>
                 </a>
               </li>
             </ul>
@@ -185,8 +187,8 @@ CSS: Adds basic styling for input, buttons, suggestions, and result display. -->
           <li class="list-inline-item">|</li>
           <li class="list-inline-item"><a href="https://datavis.nisra.gov.uk/dissemination/accessibility-statement-visualisations.html">Accessibility Statement</a></li>
         </ul>
+      <!-- </div> -->
       </div>
-      
     </footer>
 
 
