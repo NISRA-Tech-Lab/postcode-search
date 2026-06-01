@@ -82,7 +82,7 @@ CSS: Adds basic styling for input, buttons, suggestions, and result display. -->
             <div class="column left" >
                 
                 <!-- Input box for postcode search with dynamic filtering on input -->
-                <input type="text" id="searchInput" placeholder="Enter postcode..." oninput="filterPostcodes()">
+                <input type="text" id="searchInput" placeholder="Enter postcode..." oninput="filterPostcodes()" aria-label="Postcode search input">
             
                 <!-- Suggestions box for displaying matching postcodes as user types -->
                 <div id="suggestions"></div>
@@ -116,7 +116,7 @@ CSS: Adds basic styling for input, buttons, suggestions, and result display. -->
                         <li><p>The location of addresses (based on <a href = "https://www.nidirect.gov.uk/articles/pointer">Pointer</a>), postcodes and the boundaries of the areas can be explored in more detail using the
                             <a href = "https://osni-spatialni.hub.arcgis.com/apps/54ff8739ea1946cf8083ac13fff3f5dd/explore">NISRA Boundary Application</a>.
                         </p></li>
-                        <li style="list-style-type: none"><p><a  href="https://apps.spatialni.gov.uk/NISRABoundariesApplication/index.html"><img title="NISRA Boundary Application" role="img" class="notes-image" src="images/nisraboundaryapplication.png"></a></p></li>
+                        <li style="list-style-type: none"><p><a  href="https://apps.spatialni.gov.uk/NISRABoundariesApplication/index.html"><img alt="NISRA Boundary Application" role="img" class="notes-image" src="images/nisraboundaryapplication.png"></a></p></li>
                     </ol>
             </div>
         </div>
@@ -357,80 +357,135 @@ CSS: Adds basic styling for input, buttons, suggestions, and result display. -->
     }
 
 
-    let cookieBanner = document.getElementById('cookie-banner');
+// Cookie function.
+    function initCookieConsent(options = {}) {
+  const {
+    bannerId = 'cookie-banner',
+    gtmId = 'GTM-WKK8ZWP',
+    cookieDomain = '.nisra.gov.uk',
+    cookieDays = 365
+  } = options;
 
-    cookieBanner.classList.add("cookies-infobar");
-    cookieBanner.innerHTML = 
-            '<iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KF6WGSG" height = "0" width = "0" style = "display:none; visibility:hidden;" title="google tag manager"></iframe>' +
-            '<div>' +
-            '<p><strong>Cookies on the Postcode Search webpage</strong></p>' +
-            '<p>This prototype web page places small amounts of information known as cookies on your device. <a href = "https://www.nisra.gov.uk/cookies" class = "cookiesbarlink" target = "_blank" rel = "noopener noreferrer">Find out more about cookies</a>.</p>' +
-            '<button id = "accept-cookies" class = "cookies-infobar_btn">Accept cookies</button>' +
-            '<button id = "reject-cookies" class = "cookies-infobar_btn_reject">Reject cookies</button>' +
-            '</div>';
-    
-    function loadGoogleAnalytics() {
+  const cookieBanner = document.getElementById(bannerId);
+  if (!cookieBanner) return;
 
-        (function(w, d, s, l, i){
-        w[l] = w[l]||[];
-        w[l].push({'gtm.start': new Date().getTime(),
-                    event:'gtm.js'});
-        var f = d.getElementsByTagName(s)[0],
-            j = d.createElement(s),
-            dl = l !='dataLayer'?'&l='+l: '';
-        j.async = true;
-        j.src = 'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
-        f.parentNode.insertBefore(j,f);
-    })
-    (window,document,'script','dataLayer','GTM-KF6WGSG');
+  const COOKIE_NAME = 'cookie-agreed';
+  const ACCEPTED = '2';
+  const REJECTED = '0';
 
+  function getCookie(name) {
+    const parts = document.cookie ? document.cookie.split('; ') : [];
+    for (let i = 0; i < parts.length; i++) {
+      if (parts[i].startsWith(name + '=')) {
+        return decodeURIComponent(parts[i].substring(name.length + 1));
+      }
     }
+    return null;
+  }
 
-    today = new Date();
+  function setCookie(name, value, days) {
+    const expires = new Date(
+      Date.now() + days * 24 * 60 * 60 * 1000
+    ).toUTCString();
 
-    document.getElementById('accept-cookies').onclick = function() {
-    localStorage.setItem('cookie_answered', true);
-    localStorage.setItem('cookie_date', today);
+    document.cookie =
+      `${encodeURIComponent(name)}=${encodeURIComponent(value)}` +
+      `; Expires=${expires}` +
+      `; Path=/` +
+      `; Domain=${cookieDomain}` +
+      `; Secure` +
+      `; SameSite=Lax`;
+  }
+
+  function hideBanner() {
     cookieBanner.style.display = 'none';
-    loadGoogleAnalytics();
-    }
+    cookieBanner.setAttribute('aria-hidden', 'true');
+  }
 
-    document.getElementById('reject-cookies').onclick = function() {
-    localStorage.setItem('cookie_answered', true);
-    localStorage.setItem('cookie_date', today);
-    cookieBanner.style.display = 'none';
-    }
+  function showBanner() {
+    cookieBanner.style.display = 'block';
+    cookieBanner.removeAttribute('aria-hidden');
+  }
 
-    function showCookieBanner() {
+  function loadGoogleTagManager() {
+    if (window.__nisraGtmLoaded) return;
+    window.__nisraGtmLoaded = true;
 
-    diff = (today - new Date(localStorage.cookie_date)) / 1000 / 60 / 60 / 24;
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push({
+      'gtm.start': new Date().getTime(),
+      event: 'gtm.js'
+    });
 
-    if (diff > 365) {
-        localStorage.removeItem("cookie_answered");
-        localStorage.removeItem("cookie_date");
-    }
+    const firstScript = document.getElementsByTagName('script')[0];
+    const gtmScript = document.createElement('script');
+    gtmScript.async = true;
+    gtmScript.src = `https://www.googletagmanager.com/gtm.js?id=${gtmId}`;
+    firstScript.parentNode.insertBefore(gtmScript, firstScript);
 
-    if (!localStorage.cookie_answered) {
-        cookieBanner.style.display = 'block';
-    }
-    };
+    const iframe = document.createElement('iframe');
+    iframe.src = `https://www.googletagmanager.com/ns.html?id=${gtmId}`;
+    iframe.height = '0';
+    iframe.width = '0';
+    iframe.style.display = 'none';
+    iframe.style.visibility = 'hidden';
+    document.body.appendChild(iframe);
+  }
 
-    window.setInterval(function() {
-    if (document.cookie == "") {
-        localStorage.removeItem("cookie_answered");
-        localStorage.removeItem("cookie_date");
-    }
-    } , 100)
-    
+  // Build banner HTML (no GTM yet)
+  cookieBanner.classList.add('cookies-infobar');
+  cookieBanner.innerHTML = `
+    <div class="container">
+      <p><strong>Cookies on the NISRA postcode finder</strong></p>
+      <p>
+        This web page places small amounts of information known as cookies on your device.
+        <a href="https://www.nisra.gov.uk/cookies"
+           class="cookiesbarlink"
+           target="_blank"
+           rel="noopener noreferrer">
+          Find out more about cookies
+        </a>.
+      </p>
+      <button id="accept-cookies" class="cookies-infobar_btn">Accept cookies</button>
+      <button id="reject-cookies" class="cookies-infobar_btn_reject">Reject cookies</button>
+    </div>
+  `;
 
-    // Load postcode data when the page loads
-    window.onload = function() {
-        loadPostcodes()
-        footer_position()
-        showCookieBanner()
-    };
+  const acceptBtn = document.getElementById('accept-cookies');
+  const rejectBtn = document.getElementById('reject-cookies');
 
-    window.onresize = footer_position;
+  const existing = getCookie(COOKIE_NAME);
+
+  // Already accepted on nisra.gov.uk
+  if (existing === ACCEPTED) {
+    hideBanner();
+    loadGoogleTagManager();
+    return;
+  }
+
+  // Explicitly rejected
+  if (existing === REJECTED) {
+    hideBanner();
+    return;
+  }
+
+  // No decision yet
+  showBanner();
+
+  acceptBtn?.addEventListener('click', () => {
+    setCookie(COOKIE_NAME, ACCEPTED, cookieDays);
+    hideBanner();
+    loadGoogleTagManager();
+  });
+
+  rejectBtn?.addEventListener('click', () => {
+    setCookie(COOKIE_NAME, REJECTED, cookieDays);
+    hideBanner();
+  });
+}
+
+initCookieConsent();
+ 
 </script>
 
 
