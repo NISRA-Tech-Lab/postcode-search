@@ -93,14 +93,14 @@ main {
 }
 
 .fma-container {
-  max-width: 1200px;
+  max-width: 1000px;
   margin: 20px auto;
   background-color: #fff;
   padding: 16px;
 }
 
 .table-container {
-  max-width: 1100px;
+  max-width: 1000px;
   margin: 20px auto;
   padding: 20px;
   background-color: #fff;
@@ -150,7 +150,7 @@ main {
 }
 
 .header-inner {
-  max-width: 1200px;
+  max-width: 1000px;
   margin: 0 auto;
   padding: 16px;
   display: flex;
@@ -310,7 +310,7 @@ img, iframe {
 }
 
 .footer-inner {
-  max-width: 1200px;   /* same as .fma-container */
+  max-width: 1000px;   /* same as .fma-container */
   margin: 0 auto;      /* centers it */
   padding: 16px; /* same horizontal padding */
 }
